@@ -30,7 +30,7 @@ if(USE_SDL2)
 	)
 	
 	link_directories(${SDL2_BINARY_DIR})
-	include_directories(${SDL2_BINARY_DIR}/include)
+	include_directories(${SDL2_INSTALL_DIR}/include)
 elseif(USE_NATIVE)
 	message(FATAL_ERROR "USE_NATIVE is currently imcomplete. Enable USE_SDL2 to continue.")
 else()
