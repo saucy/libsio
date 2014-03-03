@@ -37,7 +37,11 @@ void Window::on(resize_event& e) {
 	
 	openGLThread.push([=]{
 		glViewport(0, 0, windowWidth, windowHeight);
+		glClear(GL_COLOR_BUFFER_BIT);
+		gl::swap_buffers();
 	});
+	
+	openGLThread.async();
 }
 
 void Window::on(keydown_event& e) {
