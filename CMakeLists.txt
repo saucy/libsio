@@ -13,6 +13,14 @@ if(USE_SDL2)
 	set(SDL2_INSTALL_DIR "${CMAKE_BINARY_DIR}/SDL2/")
 	set(SDL2_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/SDL2 "-DDIRECTX=OFF")
 	
+	if(WIN32)
+		set(SDL2_TEST_COMMAND
+			${CMAKE_COMMAND} -E copy ${SDL2_BINARY_DIR}/libSDL2.dll ${SDL2_BINARY_DIR}/libSDL2.so
+		)
+	else()
+		set(SDL2_TEST_COMMAND "")
+	endif()
+	
 	ExternalProject_Add(ExternProject_SDL2
 		URL "http://www.libsdl.org/release/SDL2-2.0.1.tar.gz"
 		URL_MD5 "0eb97039488bf463e775295f7b18b227"
@@ -21,6 +29,9 @@ if(USE_SDL2)
 		BINARY_DIR   ${SDL2_BINARY_DIR}
 		INSTALL_DIR  ${SDL2_INSTALL_DIR}
 		CMAKE_ARGS   ${SDL2_CMAKE_ARGS}
+		
+		TEST_BEFORE_INSTALL 1
+		TEST_COMMAND ${SDL2_TEST_COMMAND}
 	)
 	
 	add_custom_command(TARGET ExternProject_SDL2
@@ -41,9 +52,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(${CMAKE_BINARY_DIR}/include)
 
-string(TOUPPER ${CMAKE_BUILD_TYPE} CAPITALIZED_CMAKE_BUILD_TYPE)
-if(${CAPITALIZED_CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
-  add_definitions(-DDEBUG)
+if(CMAKE_BUILD_TYPE)
+	string(TOUPPER ${CMAKE_BUILD_TYPE} CAPITALIZED_CMAKE_BUILD_TYPE)
+	if(${CAPITALIZED_CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
+		add_definitions(-DDEBUG)
+	endif()
 endif()
 
 ## Platform stuff
