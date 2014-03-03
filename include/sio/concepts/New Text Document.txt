@@ -1,0 +1,19 @@
+#ifndef SIO_CONCEPT_PREFIX
+	#define _sioDefConcept(name) name
+#else
+	#define _sioDefConcept(name) SIO_CONCEPT_PREFIX##name
+#endif//
+
+class _sioDefConcept(node) {
+public:
+	
+private:
+	
+};
+
+class _sioDefConcept(node_tree) {
+public:
+	void add_base_node
+};
+
+#undef _sioConceptPrefix
