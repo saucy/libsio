@@ -5,10 +5,10 @@
 #include <sio/event_thread.h>
 #include <sio/window.h>
 
-class Window
+class TestWindow
 	: public sio::window {
 public:
-	Window();
+	TestWindow();
 	
 	void on(keydown_event&) override;
 };
@@ -26,7 +26,7 @@ void TestWindow::on(keydown_event& e) {
 }
 
 int main() {
-	Window window;
+	TestWindow testWindow;
 	
 	sio::this_thread::event_loop();
 	return 0;
