@@ -39,12 +39,50 @@ void sio::window::blur() {
 	sio_SetWindowFocus(_sioWindow_impl, false);
 }
 
-void sio::window::size(const int32_t in_width, const int32_t in_height) {
-	sio_ResizeWindow(_sioWindow_impl, in_width, in_height);
+int32_t sio::window::width() const {
+	int32_t windowWidth, windowHeight;
+	sio_GetWindowSize(_sioWindow_impl, &windowWidth, &windowHeight);
+	
+	return windowWidth;
 }
 
-void sio::window::size(int32_t*&& out_width, int32_t*&& out_height) const {
-	sio_GetWindowSize(_sioWindow_impl, std::move(out_width), std::move(out_height));
+int32_t sio::window::height() const {
+	int32_t windowWidth, windowHeight;
+	sio_GetWindowSize(_sioWindow_impl, &windowWidth, &windowHeight);
+	
+	return windowHeight;
+}
+
+void sio::window::width(const int32_t w) {
+	sio_ResizeWindow(_sioWindow_impl, w, height());
+}
+
+void sio::window::height(const int32_t h) {
+	sio_ResizeWindow(_sioWindow_impl, width(), h);
+}
+
+int32_t sio::window::pos_x() const {
+	return sio_GetWindowPos(_sioWindow_impl)[0];
+}
+
+int32_t sio::window::pos_y() const {
+	return sio_GetWindowPos(_sioWindow_impl)[1];
+}
+
+void sio::window::pos_x(const int32_t x) {
+	sio_MoveWindow(_sioWindow_impl, x, pos_y());
+}
+
+void sio::window::pos_y(const int32_t y) {
+	sio_MoveWindow(_sioWindow_impl, pos_x(), y);
+}
+
+void sio::window::size(const int32_t w, const int32_t h) {
+	sio_ResizeWindow(_sioWindow_impl, w, h);
+}
+
+void sio::window::pos(const int32_t x, const int32_t y) {
+	sio_MoveWindow(_sioWindow_impl, x, y);
 }
 
 void sio::window::on(keydown_event& e) {}

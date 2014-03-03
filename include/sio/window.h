@@ -83,11 +83,21 @@ namespace sio {
 		void title(std::string);
 		std::string title() const;
 		
-		void size(const int32_t in_width, const int32_t in_height);
-		void size(int32_t*&& out_width, int32_t*&& out_height) const;
+		int32_t width() const;
+		int32_t height() const;
 		
-		void pos(const int32_t in_x, const int32_t in_y);
-		void pos(int32_t*&& out_x, int32_t*&& out_y) const;
+		void width(const int32_t w);
+		void height(const int32_t h);
+		
+		int32_t pos_x() const;
+		int32_t pos_y() const;
+		
+		void pos_x(const int32_t);
+		void pos_y(const int32_t);
+		
+		void size(const int32_t w, const int32_t h);
+		
+		void pos(const int32_t x, const int32_t y);
 		
 		// ==================================
 		// EVENTS

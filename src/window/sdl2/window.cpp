@@ -228,3 +228,14 @@ void sio_GetWindowSize(SIO_Window wnd, int32_t*&& width, int32_t*&& height) {
 void sio_ResizeWindow(SIO_Window wnd, int32_t w, int32_t h) {
 	SDL_SetWindowSize(wnd->window, w, h);
 }
+
+void sio_MoveWindow(SIO_Window wnd, int32_t x, int32_t y) {
+	SDL_SetWindowPosition(wnd->window, x, y);
+}
+
+std::array<int32_t, 2> sio_GetWindowPos(SIO_Window wnd) {
+	int32_t x,y;
+	SDL_GetWindowPosition(wnd->window, &x, &y);
+	
+	return {x, y};
+}
