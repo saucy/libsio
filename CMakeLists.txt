@@ -41,7 +41,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(${CMAKE_BINARY_DIR}/include)
 
-if(${DEBUG})
+string(TOUPPER ${CMAKE_BUILD_TYPE} CAPITALIZED_CMAKE_BUILD_TYPE)
+if(${CAPITALIZED_CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
   add_definitions(-DDEBUG)
 endif()
 
@@ -205,27 +206,12 @@ add_library(sioSTATIC STATIC ${SIO_SOURCE_FILES} ${SIO_HEADER_FILES})
 
 target_link_libraries(sioSTATIC ${SIO_LIBS})
 
-#add_custom_command(TARGET sio
-#  PRE_BUILD
-#  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/include ${CMAKE_INSTALL_PREFIX}/include
-#)
-
-#add_custom_command(TARGET sio
-#  POST_BUILD
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsio.dll ${CMAKE_INSTALL_PREFIX}/bin
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsio.dll ${CMAKE_INSTALL_PREFIX}/lib
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsio.dll.a ${CMAKE_INSTALL_PREFIX}/lib
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsio_EventThread.a ${CMAKE_INSTALL_PREFIX}/lib
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsio_Window.a ${CMAKE_INSTALL_PREFIX}/lib
-#)
-
-#add_custom_command(TARGET sioSTATIC
-#  POST_BUILD
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/libsioSTATIC.a ${CMAKE_INSTALL_PREFIX}/lib/libsio.a
-#)
+set_target_properties(sioSTATIC
+	PROPERTIES OUTPUT_NAME "sio"
+)
 
 add_subdirectory(tests)
 
 install(TARGETS sio DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-install(TARGETS sioSTATIC EXPORT sio DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+install(TARGETS sioSTATIC DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
