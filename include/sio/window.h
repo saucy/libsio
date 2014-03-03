@@ -195,7 +195,14 @@ namespace sio {
 	
 	class window::resize_event {
 	public:
-		
+		/**
+		 * @brief The new width. window::width() would return same value.
+		 */
+		int32_t width;
+		/**
+		 * @brief The new height. window::height() would return same value.
+		 */
+		int32_t height;
 	};
 	
 	class window::redraw_event {

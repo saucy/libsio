@@ -17,6 +17,7 @@ public:
 	Window();
 	
 	void on(keydown_event&) override;
+	void on(resize_event&) override;
 };
 
 void Window::initOpenGL() {
@@ -29,6 +30,14 @@ Window::Window()
 	openGLThread.sync();
 	
 	show();
+}
+
+void Window::on(resize_event& e) {
+	int32_t windowWidth = width(), windowHeight = height();
+	
+	openGLThread.push([=]{
+		glViewport(0, 0, windowWidth, windowHeight);
+	});
 }
 
 void Window::on(keydown_event& e) {

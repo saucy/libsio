@@ -31,9 +31,13 @@ namespace {
 			callSioEv<sio::window::close_event>(w, thrdId);
 			break;
 		case SDL_WINDOWEVENT_RESIZED:
-		case SDL_WINDOWEVENT_SIZE_CHANGED:
-			callSioEv<sio::window::resize_event>(w, thrdId);
+		case SDL_WINDOWEVENT_SIZE_CHANGED: {
+			sio::window::resize_event sioE;
+			sioE.width = w->width();
+			sioE.height = w->height();
+			callSioEv<sio::window::resize_event>(w, thrdId, e);
 			break;
+		}
 		case SDL_WINDOWEVENT_FOCUS_GAINED:
 			callSioEv<sio::window::kbfocus_event>(w, thrdId);
 			break;
